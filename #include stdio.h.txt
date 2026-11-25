@@ -1,0 +1,111 @@
+#include <stdio.h>
+
+int main()
+{
+    char name[50][30];
+    float budget[50], spent[50];
+    int count = 0, choice, sno, i;
+    float amount;
+
+    do
+    {
+        printf("\n===== MONTHLY BUDGET PLANNER =====\n");
+        printf("1. Add Category\n");
+        printf("2. Add Spending\n");
+        printf("3. View All Categories\n");
+        printf("4. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                if(count < 50)
+                {
+                    printf("Enter category name: ");
+                    scanf("%29s", name[count]);
+
+                    printf("Enter budget: ");
+                    scanf("%f", &budget[count]);
+
+                    spent[count] = 0;
+                    count++;
+
+                    printf("Category added successfully!\n");
+                }
+                else
+                {
+                    printf("Category list is full!\n");
+                }
+                break;
+
+            case 2:
+                if(count == 0)
+                {
+                    printf("No categories available!\n");
+                }
+                else
+                {
+                    printf("\nAvailable Categories:\n");
+
+                    for(i = 0; i < count; i++)
+                    {
+                        printf("%d. %s\n", i + 1, name[i]);
+                    }
+
+                    printf("Enter category S.No.: ");
+                    scanf("%d", &sno);
+
+                    if(sno >= 1 && sno <= count)
+                    {
+                        printf("Enter spending amount: ");
+                        scanf("%f", &amount);
+
+                        if(amount > 0)
+                        {
+                            spent[sno - 1] = spent[sno - 1] + amount;
+                            printf("Spending added successfully!\n");
+                        }
+                        else
+                        {
+                            printf("Invalid amount!\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("Invalid S.No.!\n");
+                    }
+                }
+                break;
+
+            case 3:
+                if(count == 0)
+                {
+                    printf("No categories available!\n");
+                }
+                else
+                {
+                    printf("\nS.No.\tCategory\tBudget\tSpent\tRemaining\n");
+
+                    for(i = 0; i < count; i++)
+                    {
+                        printf("%d\t%s\t\t%.2f\t%.2f\t%.2f\n",
+                        i + 1, name[i], budget[i],
+                        spent[i], budget[i] - spent[i]);
+                    }
+                }
+                break;
+
+            case 4:
+                printf("Thank you for using Monthly Budget Planner!\n");
+                break;
+
+            default:
+                printf("Invalid choice!\n");
+        }
+
+    } while(choice != 4);
+
+    return 0;
+}
